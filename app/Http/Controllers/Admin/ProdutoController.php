@@ -79,7 +79,7 @@ class ProdutoController extends Controller
 
 
         $request->validate([
-            'foto' => 'required',
+            'foto' => 'sometimes',
             'titulo' => 'required',
             'descricao' => 'required',
             'valor' => 'required',

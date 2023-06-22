@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProdutoController;
 use App\Http\Controllers\Api\CategoriaController;
+use App\Http\Controllers\Api\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +18,20 @@ use App\Http\Controllers\Api\CategoriaController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/categorias', [CategoriaController::class, 'listarCategorias']);
+    Route::get('/produtos', [ProdutoController::class, 'listarProdutos']);
+    Route::get('/produtos/{id}', [ProdutoController::class, 'mostrarProduto']);
+
+    Route::get('/usuarios', [UsuarioController::class, 'usuario']);
 });
 
-Route::get('/categorias', [CategoriaController::class, 'listarCategorias']);
-Route::get('/produtos', [ProdutoController::class, 'listarProdutos']);
-Route::get('/produtos/{id}', [ProdutoController::class, 'mostrarProduto']);
+Route::post('/registrar', [UsuarioController::class, 'registrar']);
+
+Route::post('/login', [AuthController::class, 'login']);

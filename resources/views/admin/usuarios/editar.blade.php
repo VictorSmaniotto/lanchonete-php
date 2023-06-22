@@ -11,10 +11,12 @@
 
       <div class="formulario">
           <form class="row g-3"
-                method="post">
-
+                method="post"
+                action="{{ route('admin.usuarios.atualizar', $usuario->id) }}"
+                enctype="multipart/form-data">
+                @method('PUT')
               @include('admin.usuarios._formulario')
-              
+
           </form>
       </div>
   @endsection

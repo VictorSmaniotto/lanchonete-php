@@ -12,7 +12,8 @@
     <div class="formulario">
         <form class="row g-3"
               method="post"
-              action="">
+              action="{{ route('admin.usuarios.armazenar') }}"
+              enctype="multipart/form-data">
 
             @include('admin.usuarios._formulario')
 

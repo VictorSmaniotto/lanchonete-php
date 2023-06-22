@@ -5,7 +5,7 @@
         <h1 class="h2">Usuários</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <!-- Botão na Esquerda -->
-            <a href="#"
+            <a href="{{ route('admin.usuarios.cadastrar') }}"
                class="btn btn-primary">Cadastrar</a>
         </div>
     </div>
@@ -31,23 +31,31 @@
                     </thead>
                     <tbody>
 
+                        @foreach ($usuarios as $user)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>João</td>
-                            <td>joao@gmail.com</td>
+                            <th scope="row">{{ $user->id }}</th>
+                            <td>{{ $user->nome }}</td>
+                            <td>{{ $user->email }}</td>
                             <td class="d-flex">
-                                <a href="#"
+                                <a href="{{ route('admin.usuarios.editar', $user->id) }}"
                                    class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
 
-                                <button class="btn btn-danger btn-sm ms-2"
-                                        type="submit"
-                                        name="Delete">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                   <form action="{{ route('admin.usuarios.deletar', $user->id) }}"
+                                    method="post"
+                                    class="d-inline">
+                                  @method('delete')
+                                  @csrf
 
+                                  <button class="btn btn-danger btn-sm ms-1"
+                                          onclick="return confirm('Tem certeza que deseja excluir o registro?')">
+                                      <i class="fas fa-trash"></i>
+                                  </button>
+
+                              </form>
 
                             </td>
                         </tr>
+                        @endforeach
 
 
                     </tbody>

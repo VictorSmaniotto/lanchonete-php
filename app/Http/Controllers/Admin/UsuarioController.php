@@ -46,7 +46,7 @@ class UsuarioController extends Controller
         if ($request->hasFile('imagem')) {
             $imagem = $request->file('imagem');
             $imagemNome = $imagem->hashName();
-            $imagemPath = $imagem->storeAs('public/usuarios/', $imagemNome);
+            $imagemPath = $imagem->storeAs('public/usuarios', $imagemNome);
             $usuario->imagem = Storage::url($imagemPath);
         }
 
@@ -86,7 +86,7 @@ class UsuarioController extends Controller
 
             $imagem = $request->file('imagem');
             $imagemNome = $imagem->hashName();
-            $imagemPath = $imagem->storeAs('public/usuarios/', $imagemNome);
+            $imagemPath = $imagem->storeAs('public/usuarios', $imagemNome);
             $usuario->imagem = Storage::url($imagemPath);
         }
 

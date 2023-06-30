@@ -35,7 +35,7 @@ class ProdutoController extends Controller
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoNomeOriginal = $foto->getClientOriginalName();
-            $fotoPath = $foto->storeAs('public/produtos/', $fotoNomeOriginal);
+            $fotoPath = $foto->storeAs('public/produtos', $fotoNomeOriginal);
         }
 
         $request->validate([
@@ -100,7 +100,7 @@ class ProdutoController extends Controller
                 Storage::delete('public/produtos/' . basename($produto->foto));
                 $foto = $request->file('foto');
                 $fotoNomeOriginal = $foto->getClientOriginalName();
-                $fotoPath = $foto->storeAs('public/produtos/', $fotoNomeOriginal);
+                $fotoPath = $foto->storeAs('public/produtos', $fotoNomeOriginal);
                 $produto->foto = Storage::url($fotoPath);
             }
 

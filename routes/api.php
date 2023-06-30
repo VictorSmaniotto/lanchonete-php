@@ -25,13 +25,15 @@ use App\Http\Controllers\Api\UsuarioController;
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/categorias', [CategoriaController::class, 'listarCategorias']);
-    Route::get('/produtos', [ProdutoController::class, 'listarProdutos']);
-    Route::get('/produtos/{id}', [ProdutoController::class, 'mostrarProduto']);
+
 
     Route::get('/usuarios', [UsuarioController::class, 'usuario']);
 });
 
+Route::get('/produtos', [ProdutoController::class, 'listarProdutos']);
+Route::get('/produtos/{id}', [ProdutoController::class, 'mostrarProduto']);
+
+Route::get('/categorias', [CategoriaController::class, 'listarCategorias']);
 Route::post('/registrar', [UsuarioController::class, 'registrar']);
 
 Route::post('/login', [AuthController::class, 'login']);

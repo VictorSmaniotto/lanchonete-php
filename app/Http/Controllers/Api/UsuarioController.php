@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -22,34 +23,39 @@ class UsuarioController extends Controller
         return response()->json($dadosUsuario);
     }
 
-    public function registrar(Request $request)
+    public function cadastrar(Request $request)
     {
 
-
-        $request->validate([
+        // Validação dos dados de entrada
+        $validator = Validator::make($request->all(), [
             'nome' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
-
         ]);
 
-
-        $usuario = new User();
-        $usuario->nome = $request->nome;
-        $usuario->email = $request->email;
-        $usuario->password = bcrypt($request->password);
-
-
-        if ($request->hasFile('imagem')) {
-            $imagem = $request->file('imagem');
-            $imagemNome = $imagem->hashName();
-            $imagemPath = $imagem->storeAs('public/usuarios', $imagemNome);
-            $usuario->imagem = Storage::url($imagemPath);
+        // Verifica se houve falha na validação
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json(['errors' => $errors], 422);
         }
 
+        // Salvando o usuário e tratando possíveis exceções
+        try {
+            $usuario = new User();
+            $usuario->nome = $request->nome;
+            $usuario->email = $request->email;
+            $usuario->password = bcrypt($request->password);
 
-        $usuario->save();
+            if ($request->hasFile('imagem')) {
+                $usuarioPath = $request->file('imagem')->store('public/usuarios');
+                $usuario->imagem = Storage::url($usuarioPath);
+            }
 
-        return response()->json($usuario);
+            $usuario->save();
+
+            return response()->json($usuario);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Ocorreu um erro ao cadastrar o Usuario.'], 500);
+        }
     }
 }

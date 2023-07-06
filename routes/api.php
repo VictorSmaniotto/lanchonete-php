@@ -34,6 +34,6 @@ Route::get('/produtos', [ProdutoController::class, 'listarProdutos']);
 Route::get('/produtos/{id}', [ProdutoController::class, 'mostrarProduto']);
 
 Route::get('/categorias', [CategoriaController::class, 'listarCategorias']);
-Route::post('/registrar', [UsuarioController::class, 'registrar']);
+Route::post('/cadastrar', [UsuarioController::class, 'cadastrar']);
 
 Route::post('/login', [AuthController::class, 'login']);

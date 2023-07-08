@@ -99,7 +99,7 @@ class ProdutoController extends Controller
             if ($request->hasFile('foto')) {
                 Storage::delete('public/produtos/' . basename($produto->foto));
                 $foto = $request->file('foto');
-                $fotoNomeOriginal = $foto->getClientOriginalName();
+                $fotoNomeOriginal = $foto->hashName();
                 $fotoPath = $foto->storeAs('public/produtos', $fotoNomeOriginal);
                 $produto->foto = Storage::url($fotoPath);
             }
